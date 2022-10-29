@@ -3,6 +3,7 @@
 * {
   margin: 0;
   padding: 0;
+  overflow: hidden
 }
 
 body {
@@ -13,8 +14,7 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  height: 100%;
-  overflow: hidden
+  height: 100vh;
 }
 
 .container {
