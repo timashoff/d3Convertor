@@ -10,6 +10,9 @@ body {
   background-color: rgb(34, 37, 42);
   color: whitesmoke;
   color: rgb(160, 118, 202);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 
 .container {
@@ -22,7 +25,6 @@ body {
   max-width: 500px;
   border-radius: 6px;
   padding: 1rem;
-  /* border: 1px rgba(244, 165, 96, 0.3) solid; */
 }
 
 h1 {
@@ -30,31 +32,34 @@ h1 {
 }
 
 .send {
+  position: relative;
   max-width: 300px;
-  display: flex;
-  justify-content: space-around;
-  gap: 0.2em;
 }
 
-input,
-select {
-  width: 220px;
+input {
+  min-width: 270px;
   font: inherit;
   background-color: rgb(44, 47, 62);
   color: rgb(249, 181, 53);
-  height: 2rem;
+  height: 2.5rem;
   padding: 0 0.5em;
   -webkit-appearance: none;
   outline: none;
   border-style: hidden;
-  border-radius: 0;
 }
 
-select {
+.select {
+  position: absolute;
+  top: 4px;
+  left: 210px;
+  width: 70px;
+  height: 2rem;
+  background-color: rgba(44, 47, 62);
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: right;
+  font-size: 1.1rem;
 }
 
 input::-webkit-outer-spin-button,

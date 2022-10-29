@@ -7,6 +7,13 @@ const options = {
     'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com'
   }
 }
+input.forEach(i => i.addEventListener('keypress', (event) => {
+  if (i.value.length > 4) {
+    event.preventDefault()
+    return false
+  }
+}))
+
 async function currency() {
   const res = await fetch(API_URL, options)
   const data = await res.json()
@@ -15,6 +22,7 @@ async function currency() {
   input[0].addEventListener('keyup', () => {
     let diff = (101 + KGS - RUB) / 100
     let val = Math.ceil(diff * input[0].value)
+    if (input[0].value.length > 5) return false
     if (!input[0].value) input[1].value = ''
     if (input[0].value > 0) input[1].value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
   })
