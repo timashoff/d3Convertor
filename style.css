@@ -13,6 +13,8 @@ body {
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
+  height: 100%;
+  overflow: hidden
 }
 
 .container {
