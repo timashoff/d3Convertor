@@ -3,7 +3,6 @@
 * {
   margin: 0;
   padding: 0;
-
 }
 
 body {
@@ -11,9 +10,6 @@ body {
   background-color: rgb(34, 37, 42);
   color: whitesmoke;
   color: rgb(160, 118, 202);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
 }
 
 .container {
@@ -21,7 +17,6 @@ body {
   max-width: 500px;
   border-radius: 6px;
   padding: 1rem;
-  /* border: 1px salmon solid; */
 }
 
 .convertor {
@@ -31,6 +26,9 @@ body {
   align-items: center;
   gap: 1rem;
   margin-bottom: 3rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
 }
 
 h1 {
@@ -102,6 +100,10 @@ input:hover {
   outline-style: solid;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .arrow {
   font-size: 1.5rem;
 }
@@ -110,5 +112,3 @@ span,
 a {
   color: rgb(160, 118, 202);
 }
-
-a {}
