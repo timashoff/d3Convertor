@@ -3,7 +3,7 @@ const input = document.querySelectorAll('input')
 const options = {
   method: 'GET',
   headers: {
-    'X-RapidAPI-Key': '399d80f1a0msh291d45f0a5595c3p1f4701jsn2250c1094799',
+    'X-RapidAPI-Key': 'f2f559f13cmsh4cad7d6008499e4p17df63jsn1ee918e3b228',
     'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com'
   }
 }
@@ -17,6 +17,7 @@ input.forEach(i => i.addEventListener('keypress', (event) => {
 async function currency() {
   const res = await fetch(API_URL, options)
   const data = await res.json()
+  console.log(data)
   const RUB = data.quoteResponse.result[0].bid
   const KGS = data.quoteResponse.result[1].bid
   input[0].addEventListener('keyup', () => {
