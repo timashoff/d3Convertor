@@ -8,23 +8,72 @@
   <link rel="stylesheet" href="./normalize.css">
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js" defer></script>
+  <meta name="description" content="Простейший конвертор для расчета стоимости игровых товаров за пределами РФ">
   <title>Converter</title>
 </head>
 
 <body>
   <div class="container">
-    <h1>Convertor</h1>
+    <div class="convertor">
+      <h1>Convertor</h1>
 
-    <div class="send">
-      <input type="number" min="0" inputmode="numeric">
-      <div class="select">rub</div>
-    </div>
-    <span>↓</span>
-    <div class="send">
-      <input min="0" inputmode="numeric" type="number">
-      <div class="select">send</div>
+      <div class="send">
+        <input type="number" min="0" inputmode="numeric">
+        <div class="select">rub</div>
+      </div>
+
+      <span class="arrow">↓</span>
+
+      <div class="send">
+        <input min="0" inputmode="numeric" type="number">
+        <div class="select">send</div>
+      </div>
     </div>
 
+    <article>
+      <h2>Как это работает</h2>
+      <p class="article__head">В поле <span>rub</span> вводится рублевая стоимость товара, в поле <span>send</span>
+        вычисляется сумма для
+        перевода. Всё просто!
+      </p>
+      <h2>Как ведется расчет</h2>
+      <ol>
+        <li>
+          <p>Минимальная комиссия перевода из РФ в КР 50руб (<span>*</span>при переводе свыше 5000руб комиссия уже 1%)
+          </p>
+        </li>
+
+        <li>
+          <p>Региональный курс, установленный в магазине Blizzard отличается от торгующегося на
+            рынках. Например боевой
+            пропуск стоит 5.49$, текущий курс можно посмотреть <a
+              href="https://finance.yahoo.com/quote/RUB%3DX/?p=RUB%3DX" target="_blank" rel="noopener noreferrer">
+              здесь</a> и сравнить со своей ценой в рублях
+          </p>
+        </li>
+        <li>
+          <p>
+            При автоматическом расчете используется привязка к API yahoo finance
+          </p>
+        </li>
+        <li>
+          <p>
+            Местные банки в КР также ведут расчеты по своему внутрненнему курсу, отличному от
+            локального ЦБ, что накладывает дополнительный % в итоговой калькуляции
+          </p>
+        </li>
+        <li>
+          <p>
+            Итоговая цепочка по курсовой разнице выглядит примерно так:
+            <br> RUB <span>→</span> KGS <span>→</span> USD
+            <span>→</span> RUB <span>+</span> 50pуб.
+          </p>
+        </li>
+      </ol>
+
+
+
+    </article>
   </div>
 </body>
 
