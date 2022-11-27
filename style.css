@@ -53,8 +53,29 @@ p {
 }
 
 .send {
+  display: flex;
   position: relative;
   max-width: 300px;
+}
+
+button {
+  color: rgb(160, 118, 202);
+  background-color: rgb(44, 47, 62);
+  border: none;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+
+button:hover {
+  transform: scale(1.1);
+  color: orange;
+  background-color: rgba(245, 222, 179, 0.1);
+}
+
+button:active {
+  transform: scale(0.9);
+
 }
 
 input {
@@ -105,7 +126,21 @@ ul {
 }
 
 .arrow {
-  font-size: 1.5rem;
+  color: aliceblue;
+  cursor: pointer;
+  transition: all 0.3s;
+  /* border: 1px solid rebeccapurple; */
+  padding: 1rem;
+}
+
+.arrow:hover {
+  color: rgba(217, 103, 103, 0.726);
+  transform: scale(1.1);
+}
+
+.arrow:active {
+  /* color: rgba(217, 103, 103, 0.726); */
+  transform: scale(0);
 }
 
 span,

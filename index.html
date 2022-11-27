@@ -10,6 +10,7 @@
   <script src="./app.js" defer></script>
   <meta name="description" content="Простейший конвертор для расчета стоимости игровых товаров за пределами РФ">
   <title>Converter</title>
+  <link rel="icon" type="image/x-icon" href="./dollars.png">
 </head>
 
 <body>
@@ -18,14 +19,14 @@
     <div class="convertor">
       <h1>Convertor</h1>
       <div class="send">
-        <input type="number" min="0" inputmode="numeric">
-        <div class="select">rub</div>
+        <input id="input" type="number" min="0" inputmode="numeric">
+        <button id="plus" class="select">plus+</button>
       </div>
 
       <span class="arrow">↓</span>
 
       <div class="send">
-        <input min="0" inputmode="numeric" type="number">
+        <input id="output" min="0" inputmode="numeric" type="number" readonly>
         <div class="select">send</div>
       </div>
     </div>
@@ -47,8 +48,8 @@
         <li>
           <p>Региональный курс, установленный в магазине Blizzard отличается от торгующегося на
             рынках. Например, боевой
-            пропуск стоит 5.49$, текущий курс <span class="rub">()</span> (можно посмотреть <a
-              href="https://finance.yahoo.com/quote/RUB%3DX/?p=RUB%3DX" target="_blank" rel="noopener noreferrer">
+            пропуск стоит 5.49$, текущий курс <span>Ask-продажа</span> <span class="rub">()</span> (можно посмотреть
+            <a href="https://finance.yahoo.com/quote/RUB%3DX/?p=RUB%3DX" target="_blank" rel="noopener noreferrer">
               здесь</a>) и сравнить со своей ценой в рублях
           </p>
         </li>
