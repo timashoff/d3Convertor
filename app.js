@@ -14,7 +14,7 @@ const plus = document.getElementById('plus')
 const arrow = document.querySelector('.arrow')
 let today = new Date().toLocaleDateString()
 let arrOfNum = []
-
+let total = 0
 
 fields.forEach((i) => i.addEventListener('keypress', (event) => {
   if (i.value.length > 4) {
@@ -23,11 +23,9 @@ fields.forEach((i) => i.addEventListener('keypress', (event) => {
   }
 }))
 
-
 let RUB = window.localStorage.getItem('rub')
 let KGS = window.localStorage.getItem('kgs')
 document.querySelector('.rub').innerText = `${RUB}` || 'loading...'
-
 
 if (!localStorage.today || today !== localStorage.today) {
   window.localStorage.setItem('today', today)
@@ -42,30 +40,27 @@ input.addEventListener('keyup', () => {
     KGS = localStorage.kgs
   }
   const diff = (101 + +KGS * 1.015 - +RUB) / 100
-  let val = Math.ceil(diff * input.value)
 
-  if (!input.value) output.value = ''
-  if (input.value > 0) output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
-  if (arrOfNum.length && !input.value) {
-    let v = calcDiff(diff, sumFn(arrOfNum))
-    output.value = v + (v > 5000 ? Math.ceil(v * 0.01) : 50)
+  if (input.value < 1) return
+  if (!input.value && !arrOfNum.length) output.value = ''
+
+  let val = Math.round(diff * input.value)
+  if (!arrOfNum.length) {
+    output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
   }
-
+  if (arrOfNum.length) {
+    output.value = +total + val
+  }
 })
 
 input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') createArrOfCalc(input.value)
+  if (e.key === 'Enter') totalFN()
+
 })
 
-plus.addEventListener('click', () => {
-  createArrOfCalc(input.value)
-})
+plus.addEventListener('click', totalFN)
 
-arrow.addEventListener('pointerdown', () => {
-  arrOfNum.length = 0
-  arrow.innerText = '↓'
-  output.value = ''
-})
+arrow.addEventListener('pointerdown', clearAll)
 
 arrow.addEventListener('pointerover', () => {
   if (arrOfNum.length) setTimeout(() => arrow.innerText = 'удалить сохраненные значения?', 400)
@@ -84,11 +79,14 @@ document.addEventListener('keydown', (e) => {
 
 //helpers
 
-function createArrOfCalc(val) {
-  if (!val) return
-  arrOfNum.push(val)
+function totalFN() {
+  if (input.value < 1) return
+  if (total > 4999) alert('Суммы свыше 5000!')  //переделать калькуляцию
+  arrOfNum.push(+input.value)
   arrow.innerText = `${arrOfNum.toString().replace(/,/g, ' ')}`
   input.value = ''
+  total = +output.value
+  output.value = total
 }
 
 async function fetchCurrency() {
@@ -104,12 +102,9 @@ function sumFn(arr) {
   return arr.reduce((acc, i) => +acc + +i)
 }
 
-function calcDiff(diff, value) {
-  return Math.ceil(diff * value)
-}
-
 function clearAll() {
   arrOfNum.length = 0
   arrow.innerText = '↓'
   output.value = ''
+  input.value = ''
 }
