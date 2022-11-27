@@ -12,6 +12,7 @@ const input = document.getElementById('input')
 const output = document.getElementById('output')
 const plus = document.getElementById('plus')
 const arrow = document.querySelector('.arrow')
+const date = document.querySelector('.today')
 let today = new Date().toLocaleDateString()
 let arrOfNum = []
 let total = 0
@@ -27,7 +28,7 @@ let RUB = window.localStorage.getItem('rub')
 let KGS = window.localStorage.getItem('kgs')
 document.querySelector('.rub').innerText = `${RUB}` || 'loading...'
 
-if (!localStorage.today || today !== localStorage.today) {
+if (!localStorage.today || (today !== localStorage.today)) {
   window.localStorage.setItem('today', today)
   fetchCurrency()
 }
@@ -108,3 +109,5 @@ function clearAll() {
   output.value = ''
   input.value = ''
 }
+
+date.innerText = localStorage.today
