@@ -37,10 +37,8 @@ checkDate()
 // listiners
 
 input.addEventListener('keyup', () => {
-  checkDate()
   calculate()
 })
-
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') totalFN()
 
@@ -49,11 +47,9 @@ input.addEventListener('keydown', (e) => {
 plus.addEventListener('click', totalFN)
 
 arrow.addEventListener('pointerdown', clearAll)
-
 arrow.addEventListener('pointerover', () => {
-  if (arrOfNum.length) setTimeout(() => arrow.innerText = 'удалить сохраненные значения?', 400)
+  if (arrOfNum.length) setTimeout(() => arrow.innerText = 'удаление всех значений', 400)
 })
-
 arrow.addEventListener('pointerleave', () => {
   if (arrOfNum.length)
     setTimeout(() => arrow.innerText = `${arrOfNum.toString().replace(/,/g, ' + ')}`, 400)
@@ -62,7 +58,6 @@ arrow.addEventListener('pointerleave', () => {
 document.addEventListener('keydown', (e) => {
   if (e.key == "Escape") clearAll()
 })
-
 
 
 //helpers
@@ -105,22 +100,14 @@ function checkDate() {
 }
 
 function calculate() {
-
-  if (!RUB || !KGS) {
-    RUB = localStorage.rub
-    KGS = localStorage.kgs
-  }
+  checkDate()
+  if (!RUB) RUB = localStorage.rub
   const diff = Math.round(RUB / usdBlizzRate * 101) - 100
   if (!input.value && !arrOfNum.length) output.value = ''
   if (input.value < 1) return
   const val = Math.round(input.value * ((diff + convertPercent) / 101 + 1))
-
-  if (!arrOfNum.length) {
-    output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
-  }
-  if (arrOfNum.length) {
-    output.value = +total + val
-  }
+  if (!arrOfNum.length) output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
+  if (arrOfNum.length) output.value = +total + val
 }
 
 function updTotal() {
@@ -131,5 +118,5 @@ function updTotal() {
   total = val + Math.ceil(val * 0.01)
 }
 
-date.innerText = localStorage.today
+date.innerText = `${localStorage.today}`
 // date.innerText = `${localStorage.today.toString().slice(0, 10)}`
