@@ -101,8 +101,9 @@ function checkDate() {
 
 function calculate() {
   checkDate()
-  if (!RUB) RUB = localStorage.rub
+  if (RUB !== localStorage.rub) RUB = localStorage.rub
   const diff = Math.round(RUB / usdBlizzRate * 101) - 100
+  console.log(diff)
   if (!input.value && !arrOfNum.length) output.value = ''
   if (input.value < 1) return
   const val = Math.round(input.value * ((diff + convertPercent) / 101 + 1))
