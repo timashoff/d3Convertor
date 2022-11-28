@@ -13,7 +13,7 @@ const output = document.getElementById('output')
 const plus = document.getElementById('plus')
 const arrow = document.querySelector('.arrow')
 const date = document.querySelector('.today')
-let today = new Date().toLocaleDateString()
+let today = new Date().toLocaleDateString('ru', { hour: 'numeric' })
 let arrOfNum = []
 let total = 0
 
@@ -28,14 +28,13 @@ let RUB = window.localStorage.getItem('rub')
 let KGS = window.localStorage.getItem('kgs')
 document.querySelector('.rub').innerText = `${RUB}` || 'loading...'
 
-if (!localStorage.today || (today !== localStorage.today)) {
-  window.localStorage.setItem('today', today)
-  fetchCurrency()
-}
+checkDate()
+
 
 // listiners
 
 input.addEventListener('keyup', () => {
+  checkDate()
   if (!RUB || !KGS) {
     RUB = localStorage.rub
     KGS = localStorage.kgs
@@ -110,4 +109,12 @@ function clearAll() {
   input.value = ''
 }
 
+function checkDate() {
+  if (!localStorage.today || (today !== localStorage.today)) {
+    window.localStorage.setItem('today', today)
+    fetchCurrency()
+  }
+}
+
 date.innerText = localStorage.today
+// date.innerText = `${localStorage.today.toString().slice(0, 10)}`
