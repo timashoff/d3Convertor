@@ -1,5 +1,8 @@
 const API_URL = 'https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=RUB%3DX%2C%20KGS%3DX'
-
+const usdBlizzRate = 55
+const bankPercent = 2.6
+const koronaPercent = 10
+const convertPercent = bankPercent + koronaPercent
 const options = {
   method: 'GET',
   headers: {
@@ -35,22 +38,7 @@ checkDate()
 
 input.addEventListener('keyup', () => {
   checkDate()
-  if (!RUB || !KGS) {
-    RUB = localStorage.rub
-    KGS = localStorage.kgs
-  }
-  const diff = (101 + +KGS * 1.015 - +RUB) / 100
-
-  if (input.value < 1) return
-  if (!input.value && !arrOfNum.length) output.value = ''
-
-  let val = Math.round(diff * input.value)
-  if (!arrOfNum.length) {
-    output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
-  }
-  if (arrOfNum.length) {
-    output.value = +total + val
-  }
+  calculate()
 })
 
 input.addEventListener('keydown', (e) => {
@@ -81,11 +69,11 @@ document.addEventListener('keydown', (e) => {
 
 function totalFN() {
   if (input.value < 1) return
-  if (total > 4999) alert('Суммы свыше 5000!')  //переделать калькуляцию
   arrOfNum.push(+input.value)
   arrow.innerText = `${arrOfNum.toString().replace(/,/g, ' ')}`
   input.value = ''
   total = +output.value
+  if (arrOfNum.length > 1 && total > 5000) updTotal()
   output.value = total
 }
 
@@ -110,10 +98,37 @@ function clearAll() {
 }
 
 function checkDate() {
-  if (!localStorage.today || (today !== localStorage.today)) {
+  if (today !== localStorage.today) {
     window.localStorage.setItem('today', today)
     fetchCurrency()
   }
+}
+
+function calculate() {
+
+  if (!RUB || !KGS) {
+    RUB = localStorage.rub
+    KGS = localStorage.kgs
+  }
+  const diff = Math.round(RUB / usdBlizzRate * 101) - 100
+  if (!input.value && !arrOfNum.length) output.value = ''
+  if (input.value < 1) return
+  const val = Math.round(input.value * ((diff + convertPercent) / 101 + 1))
+
+  if (!arrOfNum.length) {
+    output.value = val + (val > 5000 ? Math.ceil(val * 0.01) : 50)
+  }
+  if (arrOfNum.length) {
+    output.value = +total + val
+  }
+}
+
+function updTotal() {
+  console.log(total, 'Суммы свыше 5000!')
+  const diff = Math.round(RUB / usdBlizzRate * 101) - 100
+  const sum = sumFn(arrOfNum)
+  const val = Math.round(sum * ((diff + convertPercent) / 101 + 1))
+  total = val + Math.ceil(val * 0.01)
 }
 
 date.innerText = localStorage.today
