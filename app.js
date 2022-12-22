@@ -1,7 +1,7 @@
 const API_URL = 'https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=RUB%3DX%2C%20KGS%3DX'
-const usdBlizzRate = 55
+const diffBlizzRate = 12
 const bankPercent = 2.6
-const koronaPercent = 10
+const koronaPercent = 11
 const convertPercent = bankPercent + koronaPercent
 const options = {
   method: 'GET',
@@ -78,7 +78,8 @@ async function fetchCurrency() {
   window.localStorage.setItem('rub', data.quoteResponse.result[0].ask)
   window.localStorage.setItem('kgs', data.quoteResponse.result[1].ask)
   document.querySelector('.rub').innerText = `${data.quoteResponse.result[0].ask}`
-  console.log(data)
+  // usdBlizzRate = +localStorage.rub - 12
+  console.log('fetch')
 }
 
 function sumFn(arr) {
@@ -102,8 +103,7 @@ function checkDate() {
 function calculate() {
   checkDate()
   if (RUB !== localStorage.rub) RUB = localStorage.rub
-  const diff = Math.round(RUB / usdBlizzRate * 101) - 100
-  console.log(diff)
+  const diff = Math.round(RUB / (RUB - diffBlizzRate) * 101) - 100
   if (!input.value && !arrOfNum.length) output.value = ''
   if (input.value < 1) return
   const val = Math.round(input.value * ((diff + convertPercent) / 101 + 1))
@@ -113,11 +113,10 @@ function calculate() {
 
 function updTotal() {
   console.log(total, 'Суммы свыше 5000!')
-  const diff = Math.round(RUB / usdBlizzRate * 101) - 100
+  const diff = Math.round(RUB / (RUB - 12) * 101) - 100
   const sum = sumFn(arrOfNum)
   const val = Math.round(sum * ((diff + convertPercent) / 101 + 1))
   total = val + Math.ceil(val * 0.01)
 }
 
-date.innerText = `${localStorage.today}`
-// date.innerText = `${localStorage.today.toString().slice(0, 10)}`
+date.innerText = new Date().toLocaleDateString('ru', { hour: 'numeric', minute: 'numeric' })
